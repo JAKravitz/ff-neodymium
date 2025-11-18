@@ -30,6 +30,22 @@ Outputs:
 - `nd_roi_depth_on_nir.png` – depth heatmap over dimmed NIR
 - `nd_roi_full_rgb_aoi.png` – full-scene RGB with AOI box (when `--full-rgb`)
 
+## CLI argument reference
+- `--image` (path): Hyperspectral raster (.tif/.img) with bands-first or standard rasterio layout.
+- `--hdr` (path): ENVI header with wavelengths and scale factor.
+- `--center-lat`, `--center-lon` (float): ROI center in degrees (EPSG:4326).
+- `--diameter-km` (float): ROI width in kilometers (square window in source CRS).
+- `--feature-center` (float): Target absorption center wavelength (nm), default 739.7.
+- `--left-shoulder`, `--right-shoulder` (float): Continuum shoulders (nm), default 733.6/755.3.
+- `--ndvi-thresh` (float): NDVI mask threshold; pixels above are set to NaN (vegetation mask).
+- `--tile` (int): Tile size (pixels) for streaming; lower for less RAM.
+- `--depth-threshold` (float): Minimum band depth to classify Nd.
+- `--min-neighbors` (int): Require this many active neighbors (8-neighborhood) to keep a pixel (denoise).
+- `--min-cluster-pixels` (int): Drop connected components smaller than this size (requires scipy; 0 to disable).
+- `--dilate-pixels` (int): Visual-only dilation iterations to thicken the displayed mask.
+- `--full-rgb` (flag): Also save a downsampled RGB of the full scene with the AOI box.
+- `--out-prefix` (string): Prefix for outputs. If omitted, uses the image stem in the image folder.
+
 ## Key files
 - `nd_continuum.py` – continuum removal, NDVI mask, tiling, overlays, RGB AOI helper.
 - `run_nd_cli.py` – CLI wrapper for ROI processing and PNG outputs. See header for current example.
